@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BT LED control</string>
+    <color name="darkGray">#2d2e30</color>
+    <color name="textColor">#FFFFFF</color>
+</resources>
