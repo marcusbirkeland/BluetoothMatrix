@@ -61,6 +61,20 @@
     <SeekBar
         android:id="@+id/brightnessSeekBar"
         android:layout_width="0dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDesc2" />
+
+    <SeekBar
+        android:id="@+id/speedSeekBar"
+        android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
@@ -68,73 +82,91 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDesc2" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewDesc4" />
 
     <TextView
         android:id="@+id/textViewDesc2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
         android:text="Display Brightness"
         android:textColor="@color/textColor"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dcButton" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextDisplayString" />
+
+    <TextView
+        android:id="@+id/textViewDesc4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Text speed"
+        android:textColor="@color/textColor"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/brightnessSeekBar" />
 
     <EditText
         android:id="@+id/editTextDisplayString"
         android:layout_width="219dp"
         android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="Message to display"
         android:inputType="textShortMessage"
         android:textColor="@color/textColor"
+        android:textColorHint="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDesc3" />
 
     <Button
         android:id="@+id/sendBtn"
-        android:layout_width="70dp"
+        android:layout_width="83dp"
         android:layout_height="40dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@color/colorAccent"
         android:text="Send"
         android:textColor="@color/textColor"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextDisplayString"
         app:layout_constraintTop_toBottomOf="@+id/textViewDesc3" />
 
     <TextView
         android:id="@+id/textViewDesc3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="32dp"
         android:text="Set display message"
         android:textColor="@color/textColor"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/brightnessSeekBar" />
+        app:layout_constraintTop_toBottomOf="@+id/dcButton" />
 
     <Button
         android:id="@+id/dcButton"
-        android:layout_width="101dp"
+        android:layout_width="106dp"
         android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:background="@color/colorAccent"
         android:text="Disconnect"
         android:textColor="@color/textColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewPair" />
+
 </android.support.constraint.ConstraintLayout>

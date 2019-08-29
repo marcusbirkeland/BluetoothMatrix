@@ -1,9 +1,13 @@
 #include <Arduino.h>
+#include <SoftwareSerial.h>
 #include <MD_Parola.h>
 #include <MD_MAX72xx.h>
 #include <SPI.h>
 #include "Font_Data.h"
 
+SoftwareSerial BTserial(4, 3); // RX | TX
+
+#define _SS_MAX_RX_BUFF 256 // RX buffer size
 #define CLK_PIN   13
 #define DATA_PIN  11
 #define CS_PIN    10
@@ -13,7 +17,7 @@
 #define MAX_ZONES  2
 #define ZONE_SIZE (MAX_DEVICES/MAX_ZONES)
 
-#define SCROLL_SPEED 30
+int SCROLL_SPEED = 30;
 #define SPEED_TIME  20
 #define PAUSE_TIME  0
 
@@ -33,28 +37,51 @@ void display_text(char *input_string){
 void setup() {
 	pinMode(LED_BUILTIN, OUTPUT);
 	Serial.begin(9600); // Default communication rate of the Bluetooth module
+	BTserial.begin(9600);
 	// Set up display
 	P.begin(MAX_ZONES);
 	P.setInvert(false);
 	for (uint8_t i=0; i<MAX_ZONES; i++){ // Set Zones for display
     	P.setZone(i, ZONE_SIZE*i, (ZONE_SIZE*(i+1))-1);
 	}
+	P.setIntensity(1);
 }
 
 void loop() {
-	while(Serial.available()){
-    	input = Serial.readString();
+	while(BTserial.available()){
+    	input = BTserial.readString();
 	}
   char buff[256];
   input.toCharArray(buff,256);
-  if(strncmp("INTENSITY_CONTROL",buff,strlen("INTENSITY_CONTROL"))==0){
- 	  uint8_t dig1 = buff[strlen("INTENSITY_CONTROL")];
-	  uint8_t dig2 = buff[strlen("INTENSITY_CONTROL")+1];
-   	  uint8_t intensity = dig1*10+dig2;
-	if(intensity >=0 && intensity <= 16){
-    	P.setIntensity(dig1*10+dig2);
-	}
-	}else{
-    	display_text(buff);
+  static char message[256];
+  char command[64] = "\0";
+  if(strncmp(buff, "INTENSITY",strlen("INTENSITY"))== 0 || strncmp(buff, "SPEED",strlen("SPEED"))== 0){
+	  strcpy(command, buff);
+  } else {
+	  strcpy (message, buff);
+  }
+
+  if (strncmp(command, "INTENSITY",strlen("INTENSITY"))== 0){
+	  int intensity = (command[strlen("INTENSITY")] - '0' )*2;
+
+	  P.setIntensity(intensity);
+  } else if (strncmp(command, "SPEED", strlen("SPEED"))==0){
+	  SCROLL_SPEED = (command[strlen("SPEED")] - '0') * 10;
+  }
+  Serial.println("command=" );
+  Serial.println(command);
+  Serial.println("Message=");
+  Serial.println(message);
+  display_text(message);
+
+ /*  int intensity=0;
+  if(strcmp(buff,"INT+")==0){
+		intensity = 16;
+		P.setIntensity(intensity);
+		Serial.println("INTENSITY" + intensity);
+  }
+  	else{
+			strcpy(message,buff);
   	}
+	      	display_text(message);*/
 }

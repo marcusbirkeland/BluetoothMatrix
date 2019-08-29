@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editTextDisplayString;
     ImageButton btButton;
     Button sendBtn, dcButton;
-    SeekBar brightnessSeekBar;
+    SeekBar brightnessSeekBar, speedSeekBar;
     private BluetoothAdapter myBluetooth = null;
     private BluetoothSocket bluetoothSocket = null;
     private String macAddress;
@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         btButton = findViewById(R.id.btButton);
         dcButton = findViewById(R.id.dcButton);
         brightnessSeekBar = findViewById(R.id.brightnessSeekBar);
+        brightnessSeekBar.setMax(8);
+        speedSeekBar = findViewById(R.id.speedSeekBar);
+        speedSeekBar.setMax(100);
         editTextDisplayString = findViewById(R.id.editTextDisplayString);
         sendBtn = findViewById(R.id.sendBtn);
         myBluetooth = BluetoothAdapter.getDefaultAdapter();
@@ -108,6 +111,55 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        brightnessSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (bluetoothSocket.isConnected()) {
+                    String sliderValue = "INTENSITY" + Integer.toString(brightnessSeekBar.getProgress());
+                    try {
+                        sendStringBluetooth(sliderValue);
+                    } catch (IOException e) {
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Connect a device first!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        speedSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (bluetoothSocket.isConnected()) {
+                    String sliderValue = "SPEED" + Integer.toString(speedSeekBar.getProgress());
+                    try {
+                        sendStringBluetooth(sliderValue);
+                    } catch (IOException e) {
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Connect a device first!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     private void checkBluetoothState() {
@@ -150,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String readStringBluetooth() throws IOException {
+   /* private String readStringBluetooth() throws IOException {
         InputStream socketInputStream = bluetoothSocket.getInputStream();
         byte[] buffer = new byte[256];
         String input = "";
@@ -165,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return input;
     }
-
+ */
 
     class connectBtRunnable implements Runnable {
         connectBtRunnable() {
